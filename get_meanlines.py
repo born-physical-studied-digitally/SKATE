@@ -22,15 +22,15 @@ Options:
 from docopt import docopt
 
 def get_meanlines(in_file, out_file, roi_file, scale=1, debug_dir=False):
-  from lib.debug import Debug
+  from .lib.debug import Debug
   if debug_dir:
     Debug.set_directory(debug_dir)
 
-  from lib.timer import timeStart, timeEnd
-  from lib.load_image import get_image
-  from lib.geojson_io import get_features, save_features
-  from lib.polygon_mask import mask_image
-  from lib.meanline_detection import detect_meanlines, meanlines_to_geojson
+  from .lib.timer import timeStart, timeEnd
+  from .lib.load_image import get_image
+  from .lib.geojson_io import get_features, save_features
+  from .lib.polygon_mask import mask_image
+  from .lib.meanline_detection import detect_meanlines, meanlines_to_geojson
 
   timeStart("get meanlines")
 

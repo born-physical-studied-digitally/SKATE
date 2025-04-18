@@ -20,11 +20,11 @@ Options:
 from docopt import docopt
 
 def get_segments(in_file, out_file, intersections_file):
-  from lib.timer import timeStart, timeEnd
-  from lib.load_image import get_image
-  from lib.load_geojson import get_features
-  from lib.segment_detection import get_segments
-  from lib.segment_detection import save_segments_as_geojson
+  from .lib.timer import timeStart, timeEnd
+  from .lib.load_image import get_image
+  from .lib.load_geojson import get_features
+  from .lib.segment_detection import get_segments
+  from .lib.segment_detection import save_segments_as_geojson
 
   timeStart("get segments")
 

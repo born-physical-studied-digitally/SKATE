@@ -26,11 +26,11 @@ def get_endpoint_data(features):
     ids.append(feature["id"])
   timeEnd("get coordinates")
 
-  for values in xrange(len(all_y)):
+  for values in range(len(all_y)):
     average_y.append(np.mean(all_y[values]))
     std_deviation_y.append(np.std(all_y[values]))
 
-  for starts in xrange(len(all_y)):
+  for starts in range(len(all_y)):
     x1 = all_x[starts][0]
     y1 = all_y[starts][0]
     x2 = all_x[starts][len(all_x[starts])-1]
@@ -62,7 +62,7 @@ def generate_geojson(data):
       }
     )
 
-  return FeatureCollection(map(segment, xrange(len(data["endpoints"]))))
+  return FeatureCollection(list(map(segment, range(len(data["endpoints"])))))
 
 def write_geojson(out_filename, geojson_data):
   """
@@ -77,6 +77,6 @@ def write_csv(out_filename, data):
   """
   with open(out_filename, 'w') as csvfile:
     rowwriter = csv.writer(csvfile, delimiter=',')
-    for i in xrange(len(data["endpoints"])):
+    for i in range(len(data["endpoints"])):
       rowwriter = csv.writer(csvfile, delimiter=',')
       rowwriter.writerow(data["startpoints"][i] + data["endpoints"][i])

@@ -15,8 +15,8 @@ Options:
 """
 
 from docopt import docopt
-from lib.geojson_io import get_features
-from lib.endpoints import get_endpoint_data, generate_geojson, write_geojson, write_csv
+from .lib.geojson_io import get_features
+from .lib.endpoints import get_endpoint_data, generate_geojson, write_geojson, write_csv
 
 if __name__ == '__main__':
   arguments = docopt(__doc__)

@@ -15,7 +15,7 @@ class Record:
   @classmethod
   def export_as_json(cls, filename):
     try:
-      with open(filename, "rw") as myfile:
+      with open(filename, "r+") as myfile:
         data = myfile.read()
         prev_stats = json.loads(data)
     except IOError:
@@ -24,11 +24,11 @@ class Record:
       prev_stats = {key: [] for key in cls.stats}
 
     # append all the new stats to the old stats
-    for key, record in cls.stats.iteritems():
+    for key, record in cls.stats.items():
       try:
         prev_stats[key].append(record)
       except KeyError:
-        print "WARN: Failed to save a new statistic, %s, to an existing record" % key
+        print("WARN: Failed to save a new statistic, %s, to an existing record" % key)
 
     with open(filename, "w") as myfile:
       json.dump(prev_stats, myfile)

@@ -1,10 +1,10 @@
-from timer import timeStart, timeEnd
-from debug import Debug
-from stats_recorder import Record
+from .timer import timeStart, timeEnd
+from .debug import Debug
+from .stats_recorder import Record
 
-from otsu_threshold_image import otsu_threshold_image
-from hough_lines import get_all_hough_lines
-from quality_control import points_to_rho_theta
+from .otsu_threshold_image import otsu_threshold_image
+from .hough_lines import get_all_hough_lines
+from .quality_control import points_to_rho_theta
 from skimage.morphology import remove_small_objects
 import numpy as np
 import skimage.draw as skidraw
@@ -29,6 +29,10 @@ def detect_meanlines(masked_image, corners, scale=1):
 
   # mask all image values outside of this shrunken roi
   bounded_image = masked_image.copy()
+  top_bound = int(top_bound)
+  bottom_bound = int(bottom_bound)
+  left_bound = int(left_bound)
+  right_bound = int(right_bound)
   bounded_image[:top_bound, :] = ma.masked
   bounded_image[bottom_bound:, :] = ma.masked
   bounded_image[:, :left_bound] = ma.masked
@@ -62,7 +66,7 @@ def detect_meanlines(masked_image, corners, scale=1):
                               min_separation_angle=5)
   timeEnd("get hough lines")
 
-  print "found %s meanlines" % len(lines)
+  print("found %s meanlines" % len(lines))
   Record.record("num_meanlines", len(lines))
 
   if Debug.active:

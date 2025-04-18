@@ -1,6 +1,6 @@
 import numpy as np
 from geojson import LineString, Feature
-from utilities import linear_fit
+from .utilities import linear_fit
 
 class segment:
   '''
@@ -38,7 +38,7 @@ class segment:
     self.ridge_line_v = coords
 
   def to_geojson_feature(self):
-    center_line = zip(map(int, self.center_line.x), map(int, self.center_line.y))
+    center_line = list(zip(list(map(int, self.center_line.x)), list(map(int, self.center_line.y))))
     return Feature(geometry=LineString(center_line), id=self.id)
 
   def to_json_properties(self):
@@ -52,7 +52,7 @@ class segment:
     have to download all the extra property cruft from the server.
 
     '''
-    region_coords = zip(map(int, self.region.ii), map(int, self.region.jj))
+    region_coords = list(zip(list(map(int, self.region.ii)), list(map(int, self.region.jj))))
     properties = {
       "values": self.region.values.tolist(),
       "coords": region_coords
@@ -119,7 +119,7 @@ class region:
   def add_pixels(self, pixel_coords):
     pixel_list = list(self.coords)
     pixel_list = pixel_list + list(pixel_coords)
-    pixel_list = map(tuple, pixel_list)
+    pixel_list = list(map(tuple, pixel_list))
     pixel_list = list(set(pixel_list)) # remove duplicates
     pixel_list = np.asarray(tuple(pixel_list), dtype=int)
     self.coords = pixel_list

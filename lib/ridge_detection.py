@@ -99,10 +99,12 @@ def find_valid_maxima(image_cube, footprint, exclusion, low_threshold):
   # peak_local_max expects a normalized image (values between 0 and 1)
   normalized_image_cube = normalize(image_cube)
 
-  maxima = peak_local_max(normalized_image_cube, indices=False, min_distance=1,
+  coordinates = peak_local_max(normalized_image_cube, min_distance=1,
                           threshold_rel=0, threshold_abs=0, exclude_border=True,
                           footprint=footprint)
-  
+  maxima = np.zeros_like(normalized_image_cube, dtype=bool)
+  if coordinates.size > 0:
+      maxima[tuple(coordinates.T)] = True
   return maxima & (~exclusion) & (image_cube >= low_threshold)
 
 def get_convex_pixels(img, convex_threshold):

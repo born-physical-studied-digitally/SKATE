@@ -33,7 +33,7 @@ def best_candidate_sample(coords, num_samples, num_candidates = 10):
     and num_samples rows.
   '''
   samples = [get_candidates(coords,num_candidates)[0]]
-  for i in xrange(1,num_samples):
+  for i in range(1,num_samples):
     candidates = get_candidates(coords, num_candidates)
     best_candidate = find_best_candidate(candidates, samples)
     samples.append(best_candidate)
@@ -67,7 +67,7 @@ def best_candidate_sample_from_rect(shape, num_samples, num_candidates = 10):
     and num_samples rows.
   '''
   samples = [get_candidates_from_rect(shape,num_candidates)[0]]
-  for i in xrange(1,num_samples):
+  for i in range(1,num_samples):
     candidates = get_candidates_from_rect(shape, num_candidates)
     best_candidate = find_best_candidate(candidates, samples)
     samples.append(best_candidate)

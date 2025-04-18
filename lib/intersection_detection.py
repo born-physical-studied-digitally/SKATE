@@ -5,8 +5,8 @@ Created on Thu Jan 29 14:38:19 2015
 @author: benamy
 """
 
-from timer import timeStart, timeEnd
-from stats_recorder import Record
+from .timer import timeStart, timeEnd
+from .stats_recorder import Record
 
 import numpy as np
 from matplotlib.pyplot import imread
@@ -123,7 +123,7 @@ def find_intersections(image_bin, image_skel=None, dist=None,
     image_skel, dist = medial_axis(image_bin, return_distance = True)
     timeEnd("skeletonize image")
   else:
-    print "==> Skipping skeletonization. Image skeleton already provided."
+    print("==> Skipping skeletonization. Image skeleton already provided.")
     image_skel = np.copy(image_skel)
     dist = np.copy(dist)
 
@@ -154,7 +154,7 @@ def find_intersections(image_bin, image_skel=None, dist=None,
   timeEnd("find junctions")
 
   num_intersections = len(intersections)
-  print "found %s junctions" % num_intersections
+  print("found %s junctions" % num_intersections)
   Record.record("num_intersections", num_intersections)
 
   radii = get_intersection_sizes(intersections, dist)
@@ -414,7 +414,7 @@ def get_intersection_sizes(intersections,distance_transform):
   return sizes
 
 def output_intersections(header, *args):
-  intersection_data = zip(*args)
+  intersection_data = list(zip(*args))
   filepath = os.path.dirname(os.getcwd()) + '/intersections.csv'
   with open(filepath,'wb') as f:
     writer = csv.writer(f)

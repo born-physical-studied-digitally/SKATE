@@ -10,15 +10,16 @@ from lib.debug import Debug
 from lib.stats_recorder import Record
 
 import numpy as np
-from skimage.morphology import (medial_axis, watershed, binary_erosion, square)
+from skimage.morphology import (medial_axis, binary_erosion, square)
+from skimage.segmentation import watershed
 from scipy.ndimage import label
 from skimage import color
 from skimage.filters import sobel, threshold_otsu
 from skimage.feature import canny
 
-from reverse_medial_axis import reverse_medial_axis
-from binarization import fill_corners
-from segment import segment
+from .reverse_medial_axis import reverse_medial_axis
+from .binarization import fill_corners
+from .segment import segment
 from geojson import FeatureCollection
 
 def get_segments(img_gray, img_bin, img_skel, dist, img_intersections,
@@ -100,7 +101,7 @@ def get_segments(img_gray, img_bin, img_skel, dist, img_intersections,
 
   # subtract 1 for the background segment
   num_traces = num_segments - 1
-  print "found %s segments" % num_traces
+  print("found %s segments" % num_traces)
   Record.record("num_segments", num_traces)
 
   segments = img_seg_to_seg_objects(image_segments, num_segments, ridges_h, ridges_v, img_gray)
@@ -136,10 +137,10 @@ def get_segments(img_gray, img_bin, img_skel, dist, img_intersections,
     timeEnd("calculate histograms of segment sizes")
 
     timeStart("calculate histogram of centerlines")
-    centerlines = [seg.center_line for seg in segments.itervalues() if seg.has_center_line]
+    centerlines = [seg.center_line for seg in segments.values() if seg.has_center_line]
     Record.record("num_segments_with_centerlines", len(centerlines))
 
-    centerline_lengths = map(lambda line: len(line.coords), centerlines)
+    centerline_lengths = [len(line.coords) for line in centerlines]
 
     max_centerline_length = np.amax(centerline_lengths)
     # there are no size 0 centerlines
@@ -170,7 +171,7 @@ def img_seg_to_seg_objects(img_seg, num_segments, ridges_h, ridges_v, img_gray):
   
   # segment_coordinates becomes a list of segments, where
   # each segment is a list of all of its pixel coordinates
-  segment_coordinates = [[] for i in xrange(num_segments)]
+  segment_coordinates = [[] for i in range(num_segments)]
 
   timeStart("get segment coordinates")
   it = np.nditer(img_seg, flags=['multi_index'])
@@ -247,7 +248,7 @@ def image_overlay(img, overlay, mask = None):
 
 def segments_to_geojson(segments):
   geojson_line_segments = \
-    [seg.to_geojson_feature() for seg in segments.itervalues() if seg.has_center_line]
+    [seg.to_geojson_feature() for seg in segments.values() if seg.has_center_line]
   return FeatureCollection(geojson_line_segments)
 
 def get_ridge_line(ridges_h, ridges_v, region):
@@ -274,7 +275,7 @@ def get_ridge_line(ridges_h, ridges_v, region):
   return ridge_line
 
 def get_image_values(img_gray, coords):
-  return map(lambda pt : int(255*img_gray[tuple(pt)]), coords)
+  return [int(255*img_gray[tuple(pt)]) for pt in coords]
 
 def get_ridge_coords_in_region(ridges, coord_list):
   '''

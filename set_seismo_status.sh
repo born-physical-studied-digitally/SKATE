@@ -26,8 +26,8 @@ status=$2
 # production otherwise
 type=$3
 
-if [ "$type" != "dev" ]; then
-  wget --user $user --password $pass $server/processing/setstatus/$image_name/$status -O /dev/null
-else
-  wget --user $user --password $pass http://localhost:3000/processing/setstatus/$image_name/$status -O /dev/null
-fi
+# if [ "$type" != "dev" ]; then
+#   wget --user $user --password $pass $server/processing/setstatus/$image_name/$status -O /dev/null
+# else
+#   wget --user $user --password $pass http://localhost:3000/processing/setstatus/$image_name/$status -O /dev/null
+# fi

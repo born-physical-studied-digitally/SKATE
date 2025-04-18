@@ -9,12 +9,13 @@ from lib.timer import timeStart, timeEnd
 import numpy as np
 from skimage import color
 from scipy.signal import convolve2d
-from skimage.morphology import watershed, remove_small_objects
+from skimage.morphology import remove_small_objects
+from skimage.segmentation import watershed
 from skimage.filters import sobel
 from skimage.feature import canny
 
-from threshold import background_threshold
-from ridge_detection import find_ridges
+from .threshold import background_threshold
+from .ridge_detection import find_ridges
 
 def binary_image(image, markers_trace=None, markers_background=None,
                  min_trace_size=6, min_background_size=4):

@@ -21,15 +21,15 @@ from docopt import docopt
 
 def get_intersections(in_file, out_file, roi_file, debug_dir=False):
   if debug_dir:
-    from lib.dir import ensure_dir_exists
+    from .lib.dir import ensure_dir_exists
     ensure_dir_exists(debug_dir)
 
-  from lib.timer import timeStart, timeEnd
-  from lib.intersection_detection import find_intersections
-  from lib.load_image import get_image
-  from lib.load_geojson import get_features
-  from lib.polygon_mask import mask_image
-  from lib.geojson_io import save_features
+  from .lib.timer import timeStart, timeEnd
+  from .lib.intersection_detection import find_intersections
+  from .lib.load_image import get_image
+  from .lib.load_geojson import get_features
+  from .lib.polygon_mask import mask_image
+  from .lib.geojson_io import save_features
   from skimage.io import imsave
 
   timeStart("get intersections")

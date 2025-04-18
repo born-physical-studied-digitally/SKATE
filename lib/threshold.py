@@ -13,8 +13,8 @@ from scipy.interpolate import SmoothBivariateSpline as spline2d
 from scipy.ndimage import distance_transform_edt
 from skimage.morphology import (convex_hull_image)
 from numpy.ma.core import MaskedArray
-from mitchells_best_candidate import best_candidate_sample
-from utilities import local_min
+from .mitchells_best_candidate import best_candidate_sample
+from .utilities import local_min
 
 generator = Debug.random
 
@@ -103,7 +103,7 @@ def debug_blocks(img, points, block_dims, threshold_function):
   and an additional image showing how the blocks are distributed.
   
   '''
-  from debug import Debug
+  from .debug import Debug
   from skimage.draw import line, circle
   from skimage.color import gray2rgb
 
@@ -117,9 +117,9 @@ def debug_blocks(img, points, block_dims, threshold_function):
       else:
         threshold_function(block)
 
-    except Exception, e:
-      print "threshold block error"
-      print e
+    except Exception as e:
+      print("threshold block error")
+      print(e)
       bad_block_points.append(center)
       Debug.save_image("threshold", "bad_block_"+str(center), block)
 
@@ -156,33 +156,48 @@ def debug_blocks(img, points, block_dims, threshold_function):
 
   Debug.save_image("threshold", "threshold_blocks", debug_image)
 
+# def get_block(img, center, block_dims):
+#   '''
+#   Returns the rectangular subarray of **img** centered at **center**, with
+#   dimensions at most equal to **block_dims**.
+
+#   Parameters
+#   -----------
+#   img : 2-D numpy array
+#   center : tuple or numpy array
+#     The coordinates of the center of the block. Should be integer-valued.
+#   block_dims : tuple or numpy array
+#     The dimensions of the block. If **center** is too close to the edge of
+#     **img**, the returned block will have dimensions smaller than
+#     **block_dims**.
+
+#   Results
+#   ---------
+#   block : 2-D numpy array
+#     A subarray of **img**.
+#   '''
+#   img_dims = img.shape
+#   upper = max(0, center[0] - block_dims[0] / 2)
+#   lower = min(img_dims[0], center[0] + block_dims[0] / 2 + 1)
+#   left = max(0, center[1] - block_dims[1] / 2)
+#   right = min(img_dims[1], center[1] + block_dims[1] / 2 + 1)
+#   block = img[upper:lower, left:right]
+#   return block
+
 def get_block(img, center, block_dims):
-  '''
-  Returns the rectangular subarray of **img** centered at **center**, with
-  dimensions at most equal to **block_dims**.
+    '''
+    Returns the rectangular subarray of **img** centered at **center**, with
+    dimensions at most equal to **block_dims**.
+    '''
+    img_dims = img.shape
 
-  Parameters
-  -----------
-  img : 2-D numpy array
-  center : tuple or numpy array
-    The coordinates of the center of the block. Should be integer-valued.
-  block_dims : tuple or numpy array
-    The dimensions of the block. If **center** is too close to the edge of
-    **img**, the returned block will have dimensions smaller than
-    **block_dims**.
+    upper = int(max(0, center[0] - block_dims[0] / 2))
+    lower = int(min(img_dims[0], center[0] + block_dims[0] / 2 + 1))
+    left = int(max(0, center[1] - block_dims[1] / 2))
+    right = int(min(img_dims[1], center[1] + block_dims[1] / 2 + 1))
 
-  Results
-  ---------
-  block : 2-D numpy array
-    A subarray of **img**.
-  '''
-  img_dims = img.shape
-  upper = max(0, center[0] - block_dims[0] / 2)
-  lower = min(img_dims[0], center[0] + block_dims[0] / 2 + 1)
-  left = max(0, center[1] - block_dims[1] / 2)
-  right = min(img_dims[1], center[1] + block_dims[1] / 2 + 1)
-  block = img[upper:lower, left:right]
-  return block
+    block = img[upper:lower, left:right]
+    return block
 
 def get_convex_hull(points, img_dims):
   '''

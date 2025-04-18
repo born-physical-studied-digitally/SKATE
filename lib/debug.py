@@ -1,5 +1,5 @@
 from scipy import misc
-from dir import ensure_dir_exists
+from .dir import ensure_dir_exists
 from numpy.random import RandomState
 
 def pad(number):

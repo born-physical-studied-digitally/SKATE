@@ -15,9 +15,9 @@ Options:
   --output <filename>      File to write geojson to.
 """
 from docopt import docopt
-from lib.geojson_io import get_features
-import lib.endpoints
-from lib.segment_assignment import assign_segments_to_meanlines, save_assignments_as_json
+from .lib.geojson_io import get_features
+from . import lib.endpoints
+from .lib.segment_assignment import assign_segments_to_meanlines, save_assignments_as_json
 
 if __name__ == '__main__':
     args = docopt(__doc__)

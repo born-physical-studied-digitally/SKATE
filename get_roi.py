@@ -20,13 +20,13 @@ from docopt import docopt
 
 def get_roi(in_file, out_file, scale=1, debug_dir=False):
   if debug_dir:
-    from lib.dir import ensure_dir_exists
+    from .lib.dir import ensure_dir_exists
     ensure_dir_exists(debug_dir)
 
-  from lib.timer import timeStart, timeEnd
-  from lib.load_image import get_image
-  from lib.roi_detection import get_roi, corners_to_geojson
-  from lib.geojson_io import save_features
+  from .lib.timer import timeStart, timeEnd
+  from .lib.load_image import get_image
+  from .lib.roi_detection import get_roi, corners_to_geojson
+  from .lib.geojson_io import save_features
 
   timeStart("ROI")
 
@@ -41,7 +41,7 @@ def get_roi(in_file, out_file, scale=1, debug_dir=False):
   timeEnd("convert to geojson")
 
   if debug_dir:
-    from lib.polygon_mask import mask_image
+    from .lib.polygon_mask import mask_image
     from scipy import misc
     roi_polygon = corners_as_geojson["geometry"]["coordinates"][0]
     timeStart("mask image")
@@ -54,7 +54,7 @@ def get_roi(in_file, out_file, scale=1, debug_dir=False):
     save_features(corners_as_geojson, out_file)
     timeEnd("saving as geojson")
   else:
-    print corners_as_geojson
+    print(corners_as_geojson)
 
   timeEnd("ROI")
 

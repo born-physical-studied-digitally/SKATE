@@ -1,4 +1,4 @@
-from timer import timeStart, timeEnd
+from .timer import timeStart, timeEnd
 
 from numpy.random import rand, randint
 import geojson

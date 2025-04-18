@@ -59,7 +59,7 @@ def analyze_image(in_file, out_dir, stats_file=False, scale=1, debug_dir=False, 
   img_gray = image_as_float(get_grayscale_image(in_file))
   timeEnd("read image")
 
-  print "\n--ROI--"
+  print("\n--ROI--")
   timeStart("get region of interest")
   corners = get_roi(img_gray, scale=scale)
   timeEnd("get region of interest")
@@ -73,7 +73,7 @@ def analyze_image(in_file, out_dir, stats_file=False, scale=1, debug_dir=False, 
   timeEnd("saving roi as geojson")
 
 
-  print "\n--MASK IMAGE--"
+  print("\n--MASK IMAGE--")
   roi_polygon = corners_as_geojson["geometry"]["coordinates"][0]
 
   timeStart("mask image")
@@ -83,7 +83,7 @@ def analyze_image(in_file, out_dir, stats_file=False, scale=1, debug_dir=False, 
   Debug.save_image("main", "masked_image", masked_image.filled(0))
 
 
-  print "\n--MEANLINES--"
+  print("\n--MEANLINES--")
   meanlines = detect_meanlines(masked_image, corners, scale=scale)
 
   timeStart("convert meanlines to geojson")

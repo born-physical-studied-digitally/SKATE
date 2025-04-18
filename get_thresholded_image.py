@@ -16,9 +16,9 @@ Options:
 from docopt import docopt
 
 def get_thresholded_image(in_file, out_file):
-  from lib.timer import timeStart, timeEnd
-  from lib.otsu_threshold_image import otsu_threshold_image
-  from lib.load_image import get_image
+  from .lib.timer import timeStart, timeEnd
+  from .lib.otsu_threshold_image import otsu_threshold_image
+  from .lib.load_image import get_image
   from scipy import misc
 
   timeStart("read image")

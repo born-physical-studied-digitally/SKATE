@@ -71,7 +71,7 @@ def analyze_image(in_file, out_dir, stats_file=False, scale=1, debug_dir=False, 
   img_gray = image_as_float(get_grayscale_image(in_file))
   timeEnd("read image")
 
-  print "\n--ROI--"
+  print("\n--ROI--")
   timeStart("get region of interest")
   corners = get_roi(img_gray, scale=scale)
   timeEnd("get region of interest")
@@ -85,7 +85,7 @@ def analyze_image(in_file, out_dir, stats_file=False, scale=1, debug_dir=False, 
   timeEnd("saving roi as geojson")
 
 
-  print "\n--MASK IMAGE--"
+  print("\n--MASK IMAGE--")
   roi_polygon = corners_as_geojson["geometry"]["coordinates"][0]
 
   timeStart("mask image")
@@ -101,7 +101,7 @@ def analyze_image(in_file, out_dir, stats_file=False, scale=1, debug_dir=False, 
     Record.record("roi_intensity_hist", image_hist.tolist())
 
 
-  print "\n--MEANLINES--"
+  print("\n--MEANLINES--")
   meanlines = detect_meanlines(masked_image, corners, scale=scale)
 
   timeStart("convert meanlines to geojson")
@@ -113,7 +113,7 @@ def analyze_image(in_file, out_dir, stats_file=False, scale=1, debug_dir=False, 
   timeEnd("saving meanlines as geojson")
 
 
-  print "\n--FLATTEN BACKGROUND--"
+  print("\n--FLATTEN BACKGROUND--")
   img_dark_removed, background = \
     flatten_background(masked_image, prob_background=0.95,
                        return_background=True, img_gray=img_gray)
@@ -122,14 +122,14 @@ def analyze_image(in_file, out_dir, stats_file=False, scale=1, debug_dir=False, 
 
   masked_image = None
 
-  print "\n--RIDGES--"
+  print("\n--RIDGES--")
   timeStart("get horizontal and vertical ridges")
   ridges_h, ridges_v = find_ridges(img_dark_removed, background)
   ridges = ridges_h | ridges_v
   timeEnd("get horizontal and vertical ridges")
 
 
-  print "\n--THRESHOLDING--"
+  print("\n--THRESHOLDING--")
   timeStart("get binary image")
   img_bin = binary_image(img_dark_removed, markers_trace=ridges,
                markers_background=background)
@@ -138,7 +138,7 @@ def analyze_image(in_file, out_dir, stats_file=False, scale=1, debug_dir=False, 
   img_dark_removed = None
   background = None
 
-  print "\n--SKELETONIZE--"
+  print("\n--SKELETONIZE--")
   timeStart("get medial axis skeleton and distance transform")
   img_skel, dist = medial_axis(img_bin, return_distance=True)
   timeEnd("get medial axis skeleton and distance transform")
@@ -146,7 +146,7 @@ def analyze_image(in_file, out_dir, stats_file=False, scale=1, debug_dir=False, 
   Debug.save_image("skeletonize", "skeleton", img_skel)
 
 
-  print "\n--INTERSECTIONS--"
+  print("\n--INTERSECTIONS--")
   intersections = find_intersections(img_bin, img_skel, dist, figure=False)
 
   timeStart("convert to geojson")
@@ -166,7 +166,7 @@ def analyze_image(in_file, out_dir, stats_file=False, scale=1, debug_dir=False, 
   misc.imsave(paths["intersections_raster"], intersection_image)
   timeEnd("save intersections raster")
 
-  print "\n--SEGMENTS--"
+  print("\n--SEGMENTS--")
   timeStart("get segments")
   segments, labeled_regions = \
     get_segments(img_gray, img_bin, img_skel, dist, intersection_image,
@@ -211,9 +211,9 @@ def analyze_image(in_file, out_dir, stats_file=False, scale=1, debug_dir=False, 
   # for specific conditions.
   max_segments_reasonable = 11000
   if (len(segments) > max_segments_reasonable):
-    print "STATUS>>>problematic<<<"
+    print("STATUS>>>problematic<<<")
   else:
-    print "STATUS>>>complete<<<"
+    print("STATUS>>>complete<<<")
 
 if __name__ == '__main__':
   arguments = docopt(__doc__)

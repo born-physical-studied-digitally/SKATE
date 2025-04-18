@@ -1,9 +1,9 @@
-from debug import Debug
-from stats_recorder import Record
+from .debug import Debug
+from .stats_recorder import Record
 
 import numpy as np
 from skimage.transform import hough_line, hough_line_peaks
-from utilities import normalize
+from .utilities import normalize
 
 def get_best_hough_lines(image, min_angle, max_angle, min_separation_distance,
                          min_separation_angle):
@@ -44,7 +44,7 @@ def get_all_hough_lines(image, min_angle, max_angle, min_separation_distance,
   if Debug.active:
     peak_angle_idxs = [ np.where(angles == angle)[0][0] for angle in peak_angles ]
     peak_rho_idxs = [ np.where(distances == distance)[0][0] for distance in peak_distances ]
-    peak_coords = zip(peak_rho_idxs, peak_angle_idxs)
+    peak_coords = list(zip(peak_rho_idxs, peak_angle_idxs))
     peaks = np.zeros(hough.shape)
     for coord in peak_coords:
       peaks[coord] = 1

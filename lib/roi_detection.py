@@ -1,4 +1,4 @@
-from timer import timeStart, timeEnd
+from .timer import timeStart, timeEnd
 from lib.debug import Debug
 from lib.stats_recorder import Record
 
@@ -13,9 +13,9 @@ from skimage.transform import hough_line, hough_line_peaks, probabilistic_hough_
 import skimage.draw as skidraw
 from skimage.color import gray2rgb
 
-from line_intersection import seg_intersect
-from hough_lines import get_best_hough_lines
-from otsu_threshold_image import otsu_threshold_image
+from .line_intersection import seg_intersect
+from .hough_lines import get_best_hough_lines
+from .otsu_threshold_image import otsu_threshold_image
 
 import matplotlib.pyplot as plt
 import geojson
@@ -99,12 +99,12 @@ def get_box_lines(boundary, image = None):
   hough_lines["bottom"] += [0, half_height]
   hough_lines["right"] += [half_width, 0]
 
-  print "found these hough lines:"
-  print hough_lines
+  print("found these hough lines:")
+  print(hough_lines)
 
   if Debug.active:
     image = gray2rgb(boundary)
-    line_coords = [ skidraw.line(line[0][1], line[0][0], line[1][1], line[1][0]) for line in hough_lines.itervalues() ]
+    line_coords = [ skidraw.line(line[0][1], line[0][0], line[1][1], line[1][0]) for line in hough_lines.values() ]
     for line in line_coords:
       rr, cc = line
       mask = (rr >= 0) & (rr < image.shape[0]) & (cc >= 0) & (cc < image.shape[1])
@@ -123,13 +123,13 @@ def get_corners(lines, image = None):
   }
 
   # turn corners into tuples of the form (x, y), where x and y are integers
-  corners = { corner_name: tuple(coord.astype(int)) for corner_name, coord in corners.iteritems() }
+  corners = { corner_name: tuple(coord.astype(int)) for corner_name, coord in corners.items() }
   timeEnd("find intersections")
 
   if Debug.active:
     image_copy = np.copy(image)
-    inner_circles = { corner_name: skidraw.circle(corner[1], corner[0], 10, shape=image.shape) for corner_name, corner in corners.iteritems() }
-    outer_circles = { corner_name: skidraw.circle(corner[1], corner[0], 50, shape=image.shape) for corner_name, corner in corners.iteritems() }
+    inner_circles = { corner_name: skidraw.circle(corner[1], corner[0], 10, shape=image.shape) for corner_name, corner in corners.items() }
+    outer_circles = { corner_name: skidraw.circle(corner[1], corner[0], 50, shape=image.shape) for corner_name, corner in corners.items() }
     for corner_name in inner_circles:
       image_copy[outer_circles[corner_name]] = 0.0
       image_copy[inner_circles[corner_name]] = 1.0

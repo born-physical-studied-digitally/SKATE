@@ -8,7 +8,7 @@ Created on Tue Feb 17 11:54:50 2015
 from lib.timer import timeStart, timeEnd
 
 import numpy as np
-from skimage.draw import circle
+from skimage.draw import disk
 from scipy.stats import percentileofscore
 from skimage.morphology import dilation, erosion
 # from threshold import make_background_thresh_fun
@@ -107,7 +107,7 @@ def mark_coords(shape, coords):
   return markers
 
 def draw_circle(image,coords,radius):
-  rr, cc = circle(coords[0], coords[1], radius)
+  rr, cc = disk(coords[0], coords[1], radius)
   image[rr, cc] = True
 
 '''

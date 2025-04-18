@@ -16,8 +16,8 @@ Options:
 
 from docopt import docopt
 from scipy.misc import imresize, imsave
-from lib.load_image import get_image
-from lib.timer import timeStart, timeEnd
+from .lib.load_image import get_image
+from .lib.timer import timeStart, timeEnd
 
 def resize_image(in_file, out_file, scale):
   timeStart("load image")
