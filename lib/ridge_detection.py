@@ -47,7 +47,9 @@ def get_ridge_region_horiz(ridges, shape):
     ridge_width = round(np.sqrt(2) * sigma)
     bounds = np.array([row-ridge_width, row+ridge_width])
     bounds = np.clip(bounds, 0, shape[0]-1)
-    ridge_region[bounds[0]:bounds[1], col] = max_value
+    # ridge_region[bounds[0]:bounds[1], col] = max_value
+    ridge_region[int(bounds[0]):int(bounds[1]), int(col)] = max_value
+
 
   return ridge_region
 
@@ -98,13 +100,12 @@ def find_valid_maxima(image_cube, footprint, exclusion, low_threshold):
 
   # peak_local_max expects a normalized image (values between 0 and 1)
   normalized_image_cube = normalize(image_cube)
-
-  coordinates = peak_local_max(normalized_image_cube, min_distance=1,
+  print("before entering maxima")
+  maxima = peak_local_max(normalized_image_cube, indices=False, min_distance=1,
                           threshold_rel=0, threshold_abs=0, exclude_border=True,
-                          footprint=footprint)
-  maxima = np.zeros_like(normalized_image_cube, dtype=bool)
-  if coordinates.size > 0:
-      maxima[tuple(coordinates.T)] = True
+                          footprint=footprint, num_peaks = 500000)
+  print("After maxima")
+  
   return maxima & (~exclusion) & (image_cube >= low_threshold)
 
 def get_convex_pixels(img, convex_threshold):

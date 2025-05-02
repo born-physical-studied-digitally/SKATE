@@ -51,8 +51,10 @@ def ellipse(cy, cx, yradius, xradius, shape=None):
     center = np.array([cy, cx])
     radiuses = np.array([yradius, xradius])
 
-    upper_left = np.ceil(center - radiuses)
-    lower_right = np.floor(center + radiuses)
+    # upper_left = np.ceil(center - radiuses)
+    # lower_right = np.floor(center + radiuses)
+    upper_left = np.ceil(center - radiuses).astype(int)
+    lower_right = np.floor(center + radiuses).astype(int)
 
     if shape is not None:
       # Constrain ymin and ymax by shape boundary

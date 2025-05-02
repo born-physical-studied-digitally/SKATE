@@ -21,6 +21,7 @@ Options:
 """
 
 from docopt import docopt
+import imageio.v2 as imageio 
 
 def analyze_image(in_file, out_dir, stats_file=False, scale=1, debug_dir=False, fix_seed=False):
   from lib.dir import ensure_dir_exists
@@ -163,7 +164,12 @@ def analyze_image(in_file, out_dir, stats_file=False, scale=1, debug_dir=False, 
 
   Debug.save_image("intersections", "intersections", intersection_image)
   timeStart("save intersections raster")
-  misc.imsave(paths["intersections_raster"], intersection_image)
+  intersection_image = np.array(intersection_image) 
+  if not np.issubdtype(intersection_image.dtype, np.number):
+    print(f"WARNING: image dtype is {intersection_image.dtype}, converting to uint8")
+    intersection_image = intersection_image.astype(np.uint8)
+  # misc.imsave(paths["intersections_raster"], intersection_image)
+  imageio.imwrite(paths["intersections_raster"], intersection_image)
   timeEnd("save intersections raster")
 
   print("\n--SEGMENTS--")
@@ -177,8 +183,14 @@ def analyze_image(in_file, out_dir, stats_file=False, scale=1, debug_dir=False, 
   rgb_segments = encode_labeled_image_as_rgb(labeled_regions)
   timeEnd("encode labels as rgb values")
 
+  rgb_segments = np.array(rgb_segments)  # ensure NumPy array
+  if rgb_segments.dtype != np.uint8:
+      print(f"Converting segment image from {rgb_segments.dtype} to uint8")
+      rgb_segments = (rgb_segments * 255).clip(0, 255).astype(np.uint8)
+
   timeStart("save segment regions")
-  misc.imsave(paths["segment_regions"], rgb_segments)
+  # misc.imsave(paths["segment_regions"], rgb_segments)
+  imageio.imwrite(paths["segment_regions"], rgb_segments)
   timeEnd("save segment regions")
 
   timeStart("convert centerlines to geojson")

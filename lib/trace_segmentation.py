@@ -275,7 +275,8 @@ def get_ridge_line(ridges_h, ridges_v, region):
   return ridge_line
 
 def get_image_values(img_gray, coords):
-  return [int(255*img_gray[tuple(pt)]) for pt in coords]
+  return [int(255 * img_gray[int(round(pt[0])), int(round(pt[1]))]) for pt in coords]
+  # return [int(255*img_gray[tuple(pt)]) for pt in coords]
 
 def get_ridge_coords_in_region(ridges, coord_list):
   '''
