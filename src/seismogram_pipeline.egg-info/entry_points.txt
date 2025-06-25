@@ -1,0 +1,10 @@
+[console_scripts]
+seismogram-get-all-metadata = seismogram_pipeline.cli.get_all_metadata:main
+seismogram-get-endpoints = seismogram_pipeline.cli.get_endpoints:main
+seismogram-get-intersections = seismogram_pipeline.cli.get_intersections:main
+seismogram-get-meanlines = seismogram_pipeline.cli.get_meanlines:main
+seismogram-get-roi = seismogram_pipeline.cli.get_roi:main
+seismogram-get-segment-assignments = seismogram_pipeline.cli.get_segment_assignments:main
+seismogram-get-segments = seismogram_pipeline.cli.get_segments:main
+seismogram-get-thresholded-image = seismogram_pipeline.cli.get_thresholded_image:main
+seismogram-resize-image = seismogram_pipeline.cli.resize_image:main

@@ -1,0 +1,81 @@
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Topic :: Scientific/Engineering :: Image Processing",
+]
+requires-python = ">=3.7"
+dependencies = [
+    "numpy>=1.19.0",
+    "scipy>=1.5.0",
+    "scikit-image>=0.17.0",
+    "matplotlib>=3.3.0",
+    "geojson>=2.5.0",
+    "docopt>=0.6.2",
+    "imageio>=2.8.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=6.0",
+    "pytest-cov>=2.10",
+    "black>=21.0",
+    "flake8>=3.8",
+    "mypy>=0.800",
+]
+
+[project.scripts]
+seismogram-get-all-metadata = "seismogram_pipeline.cli.get_all_metadata:main"
+seismogram-get-roi = "seismogram_pipeline.cli.get_roi:main"
+seismogram-get-meanlines = "seismogram_pipeline.cli.get_meanlines:main"
+seismogram-get-intersections = "seismogram_pipeline.cli.get_intersections:main"
+seismogram-get-segments = "seismogram_pipeline.cli.get_segments:main"
+seismogram-get-segment-assignments = "seismogram_pipeline.cli.get_segment_assignments:main"
+seismogram-get-endpoints = "seismogram_pipeline.cli.get_endpoints:main"
+seismogram-get-thresholded-image = "seismogram_pipeline.cli.get_thresholded_image:main"
+seismogram-resize-image = "seismogram_pipeline.cli.resize_image:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.black]
+line-length = 88
+target-version = ['py37']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | build
+  | dist
+)/
+'''
+
+[tool.flake8]
+max-line-length = 88
+extend-ignore = ["E203", "W503"]
+exclude = [
+    ".git",
+    "__pycache__",
+    "build",
+    "dist",
+    ".eggs",
+    "*.egg",
+]
+
+[tool.mypy]
+python_version = "3.7"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true 
