@@ -16,7 +16,7 @@ from scipy.signal import convolve2d
 
 from skimage.morphology import medial_axis
 from skimage import color
-from lib.draw import circle
+from .draw import circle
 
 import geojson
 
