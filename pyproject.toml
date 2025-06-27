@@ -2,15 +2,11 @@
 requires = ["setuptools>=45", "wheel"]
 build-backend = "setuptools.build_meta"
 
-classifiers = [
-    "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.7",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
-    "Topic :: Scientific/Engineering :: Image Processing",
-]
-requires-python = ">=3.7"
+[project]
+name = "SKATE3"
+version = "1.0.0"
+description = "SKATES implemented for Python 3"
+requires-python = ">=3.9"
 dependencies = [
     "numpy>=1.19.0",
     "scipy>=1.5.0",
