@@ -292,9 +292,9 @@ def find_valid_maxima(image_cube, footprint, exclusion, low_threshold):
   # peak_local_max expects a normalized image (values between 0 and 1)
   normalized_image_cube = normalize(image_cube)
   print("before entering maxima")
-  maxima = peak_local_max(normalized_image_cube, indices=False, min_distance=1,
+  maxima = peak_local_max2(normalized_image_cube, indices=False, min_distance=1,
                           threshold_rel=0, threshold_abs=0, exclude_border=True,
-                          footprint=footprint, num_peaks = 300000)
+                          footprint=footprint)
   print("After maxima")
   
   return maxima & (~exclusion) & (image_cube >= low_threshold)
