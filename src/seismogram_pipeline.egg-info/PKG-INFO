@@ -1,3 +1,9 @@
+Metadata-Version: 2.4
+Name: seismogram-pipeline
+Version: 1.0.0
+Summary: A pipeline for processing seismogram images and extracting metadata
+Author: Seismogram Pipeline Team
+License: MIT
 Requires-Python: >=3.7
 Description-Content-Type: text/markdown
 Requires-Dist: numpy>=1.19.0
@@ -13,8 +19,10 @@ Requires-Dist: pytest-cov>=2.10; extra == "dev"
 Requires-Dist: black>=21.0; extra == "dev"
 Requires-Dist: flake8>=3.8; extra == "dev"
 Requires-Dist: mypy>=0.800; extra == "dev"
-Dynamic: requires-python
 
+# Seismogram Pipeline
+
+## Installation
 
 ### Prerequisites
 
@@ -75,7 +83,6 @@ seismogram-pipeline/
 ├── tests/                            # Test files
 ├── docs/                             # Documentation
 ├── config/                           # Configuration files
-├── setup.py                          # Package setup
 └── README.md                         # This file
 ```
 

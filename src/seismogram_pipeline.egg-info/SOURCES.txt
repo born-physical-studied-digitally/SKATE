@@ -1,6 +1,5 @@
 README.md
 pyproject.toml
-setup.py
 src/seismogram_pipeline/__init__.py
 src/seismogram_pipeline.egg-info/PKG-INFO
 src/seismogram_pipeline.egg-info/SOURCES.txt

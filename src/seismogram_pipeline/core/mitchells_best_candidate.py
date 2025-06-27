@@ -7,7 +7,7 @@ Created on Sun Nov  9 21:53:26 2014
 
 import numpy as np
 from math import sqrt
-from lib.debug import Debug
+from .debug import Debug
 
 generator = Debug.random
 
