@@ -1,9 +1,9 @@
 Metadata-Version: 2.4
 Name: seismogram-pipeline
 Version: 1.0.0
-Summary: A pipeline for processing seismogram images and extracting metadata
-Author: Seismogram Pipeline Team
-License: MIT
+Summary: .
+Author: .
+License: .
 Requires-Python: >=3.7
 Description-Content-Type: text/markdown
 Requires-Dist: numpy>=1.19.0
