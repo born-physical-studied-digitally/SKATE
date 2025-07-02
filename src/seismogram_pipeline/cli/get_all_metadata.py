@@ -22,11 +22,14 @@ Options:
 
 from docopt import docopt
 import imageio.v2 as imageio 
+import os
+from seismogram_pipeline.core.dir import ensure_dir_exists
+
+
 
 def analyze_image(in_file, out_dir, stats_file=False, scale=1, debug_dir=False, fix_seed=False):
-  from ..core.dir import ensure_dir_exists
-  from ..core.debug import Debug
-  from ..core.stats_recorder import Record
+  from seismogram_pipeline.core.debug import Debug
+  from seismogram_pipeline.core.stats_recorder import Record
 
   if debug_dir:
     Debug.set_directory(debug_dir)
@@ -231,13 +234,23 @@ def main():
     """Main entry point for the get_all_metadata CLI."""
     arguments = docopt(__doc__)
     in_file = arguments["--image"]
-    out_dir = arguments["--output"]
+    base_out_dir = arguments["--output"]
     stats_file = arguments["--stats"]
     scale = float(arguments["--scale"])
     debug_dir = arguments["--debug"]
     fix_seed = arguments["--fix-seed"]
 
-    if in_file and out_dir:
+    if in_file and base_out_dir:
+        # Ensure the base output directory exists
+        ensure_dir_exists(base_out_dir)
+        
+        # Create output directory using input filename (without extension)
+        filename = os.path.basename(in_file)
+        name_without_ext = os.path.splitext(filename)[0]
+        out_dir = os.path.join(base_out_dir, name_without_ext)
+        
+        print(f"Creating output directory: {out_dir}")
+        
         analyze_image(in_file, out_dir, stats_file, scale, debug_dir, fix_seed)
     else:
         print(arguments)
