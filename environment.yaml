@@ -1,11 +1,10 @@
-name: seismo
+name: Seismogram2
 channels:
+  - conda-forge
   - defaults
 dependencies:
-  - python=2.7
-  - numpy
-  - geojson
-  - docopt
+  - python=3.9
+  - scikit-image=0.19.3
+  - opencv
   - matplotlib
-  - scipy
-prefix: /home/bennlich/miniconda3/envs/seismo
+prefix: /opt/anaconda3/envs/Seismogram2

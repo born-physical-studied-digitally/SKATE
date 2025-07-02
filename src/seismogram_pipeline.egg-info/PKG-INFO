@@ -1,3 +1,25 @@
+Metadata-Version: 2.4
+Name: seismogram-pipeline
+Version: 1.0.0
+Summary: .
+Author: .
+License: .
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+Requires-Dist: numpy>=1.19.0
+Requires-Dist: scipy>=1.5.0
+Requires-Dist: scikit-image>=0.17.0
+Requires-Dist: matplotlib>=3.3.0
+Requires-Dist: geojson>=2.5.0
+Requires-Dist: docopt>=0.6.2
+Requires-Dist: imageio>=2.8.0
+Provides-Extra: dev
+Requires-Dist: pytest>=6.0; extra == "dev"
+Requires-Dist: pytest-cov>=2.10; extra == "dev"
+Requires-Dist: black>=21.0; extra == "dev"
+Requires-Dist: flake8>=3.8; extra == "dev"
+Requires-Dist: mypy>=0.800; extra == "dev"
+
 # Seismogram Pipeline
 
 ## Installation
